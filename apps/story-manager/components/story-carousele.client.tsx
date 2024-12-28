@@ -46,6 +46,31 @@ export default function ImageCarousel() {
       src: alexImage,
       alt: "Image 5",
     },
+    {
+      id: "6",
+      src: alexImage,
+      alt: "Image 1",
+    },
+    {
+      id: "7",
+      src: alexImage,
+      alt: "Image 2",
+    },
+    {
+      id: "8",
+      src: alexImage,
+      alt: "Image 3",
+    },
+    {
+      id: "9",
+      src: alexImage,
+      alt: "Image 4",
+    },
+    {
+      id: "10",
+      src: alexImage,
+      alt: "Image 5",
+    },
   ]);
 
   const onDragEnd = (result: DropResult) => {
