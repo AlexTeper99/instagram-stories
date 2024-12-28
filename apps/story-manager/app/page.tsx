@@ -1,4 +1,5 @@
-import { Button } from "@workspace/ui/components/button";
+import { ModeToggle } from "@workspace/ui/components/mode-toggle.client";
+import { Button } from "@workspace/ui/components/shadcn/button";
 
 export default function Page() {
   return (
@@ -6,6 +7,7 @@ export default function Page() {
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold">Story manager</h1>
         <Button size="sm">Story manager</Button>
+        <ModeToggle />
       </div>
     </div>
   );
