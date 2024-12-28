@@ -1,3 +1,4 @@
+import ImageCarousel from "@/components/story-carousele.client";
 import { ModeToggle } from "@workspace/ui/components/mode-toggle.client";
 import { Button } from "@workspace/ui/components/shadcn/button";
 
@@ -8,6 +9,7 @@ export default function Page() {
         <h1 className="text-2xl font-bold">Story manager</h1>
         <Button size="sm">Story manager</Button>
         <ModeToggle />
+        <ImageCarousel />
       </div>
     </div>
   );
