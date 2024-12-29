@@ -1,4 +1,4 @@
-import StoryDeckManager from "@/components/StoryDeckManager";
+import StoryDeckManager from "@/components/StoryDeckManager/StoryDeckManager";
 
 export default function Page() {
   return (

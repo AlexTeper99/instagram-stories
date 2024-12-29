@@ -6,10 +6,10 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { CircleX, X } from "lucide-react";
+import { CircleX } from "lucide-react";
 
-import { useStoryDeckStore } from "../store/MediaStore.store";
-import PreviewCard from "./preview-card";
+import { useStoryDeckStore } from "../../store/MediaStore.store";
+import PreviewCard from "./PreviewCard";
 import UploadMedia from "./UploadMedia";
 
 export default function StoryDeckManager() {
