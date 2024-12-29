@@ -38,7 +38,7 @@ const StoryDeckForm = () => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-row items-center justify-between w-2/3 mb-4"
+        className="flex flex-row items-center justify-between w-2/3 "
       >
         <FormField
           control={form.control}
@@ -47,9 +47,11 @@ const StoryDeckForm = () => {
             <FormItem>
               <FormLabel>Title</FormLabel>
 
-              <Input placeholder="shadcn" {...field} />
+              <Input placeholder="Title" {...field} />
 
-              <FormMessage />
+              <div className="min-h-10">
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />
