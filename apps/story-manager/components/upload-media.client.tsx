@@ -46,18 +46,24 @@ export default function ImageUploader() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    <div className="rounded-lg w-full">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Label>Select an image to upload</Label>
-          <Input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            ref={fileInputRef}
-            className="mt-1"
-          />
+        <div className="flex flex-row items-end w-full  justify-between gap-2">
+          <div>
+            <Label className="text-foreground">Select an image to upload</Label>
+            <Input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              className="mt-1"
+            />
+          </div>
+
+          <Button type="submit" disabled={!selectedImage}>
+            Upload Image
+          </Button>
         </div>
 
         {selectedImage && (
@@ -66,16 +72,12 @@ export default function ImageUploader() {
             <Image
               src={URL.createObjectURL(selectedImage)}
               alt="Preview"
-              className="mt-2 max-w-full h-auto rounded-lg"
-              width={40}
-              height={40}
+              className="mt-2 rounded-lg"
+              width={60}
+              height={60}
             />
           </div>
         )}
-
-        <Button type="submit" disabled={!selectedImage}>
-          Upload Image
-        </Button>
       </form>
     </div>
   );

@@ -42,7 +42,7 @@ export default function StoryCarousel() {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex overflow-x-auto space-x-4 p-4 border-2  rounded-lg  w-[80dvw] min-h-[230px]"
+            className="flex overflow-x-auto space-x-4 p-4 border-2  rounded-lg  w-[80dvw] min-h-[230px] "
           >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
