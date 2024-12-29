@@ -12,7 +12,7 @@ import { useStoryDeckStore } from "../../store/MediaStore.store";
 import PreviewCard from "./PreviewCard";
 import UploadMedia from "./UploadMedia";
 
-export default function StoryDeckManager() {
+export default function StoryDeckImageManager() {
   const { items, setItems } = useStoryDeckStore();
 
   const onDragEnd = (result: DropResult) => {
