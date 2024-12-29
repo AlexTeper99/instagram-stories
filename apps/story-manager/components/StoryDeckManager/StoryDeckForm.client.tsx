@@ -14,6 +14,11 @@ import {
 import { useToast } from "@workspace/ui/hooks/use-toast";
 import { useStoryDeckStore } from "@/store/MediaStore.store";
 import { useRouter } from "next/navigation";
+import { createDeck } from "@/database/actions";
+import { InsertDeck, InsertStory } from "@/database/schema";
+import { convertBlobUrlToFile } from "@/lib/utils";
+import { uploadImage } from "@/database/supabase/storage/client";
+import { useTransition } from "react";
 
 const FormSchema = z.object({
   title: z.string().min(2, {
@@ -25,6 +30,7 @@ const StoryDeckForm = () => {
   const { items, reset } = useStoryDeckStore();
   const toast = useToast();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -33,24 +39,49 @@ const StoryDeckForm = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data, "data");
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    startTransition(async () => {
+      const urls = [];
+      for (const item of items) {
+        const imageFile = await convertBlobUrlToFile(item.src.toString());
 
-    // Llamar al server action para crear un nuevo deck.
-    // El server action debe recibir el titulo y las imagenes del deck.
-    // Las imagenes se tienen que subir al servidor (supabase) y guardar las stories y los decks en la base de datos.
+        const { imageUrl, error } = await uploadImage({
+          file: imageFile,
+          bucket: "media",
+        });
 
-    reset();
+        if (error) {
+          console.error(error);
+          return;
+        }
 
-    form.reset();
+        urls.push(imageUrl);
+      }
 
-    toast.toast({
-      title: "Deck created",
-      description: "The deck was created successfully!",
-      variant: "default",
+      const deckStories: InsertStory[] = urls.map((url, index) => ({
+        createdAt: new Date().toISOString(),
+        image_url: url,
+        alt: new Date().toISOString() + index.toString(),
+      }));
+
+      const deckData: InsertDeck = {
+        title: data.title,
+      };
+
+      await createDeck(deckData, deckStories);
+
+      reset();
+
+      form.reset();
+
+      toast.toast({
+        title: "Deck created",
+        description: "The deck was created successfully!",
+        variant: "default",
+      });
+
+      router.push("/");
     });
-
-    router.push("/");
   }
 
   return (
@@ -76,9 +107,9 @@ const StoryDeckForm = () => {
         />
         <Button
           type="submit"
-          disabled={!form.getValues("title") || !items.length}
+          disabled={!form.getValues("title") || !items.length || isPending}
         >
-          Submit
+          {isPending ? "Uploading..." : "Upload"}
         </Button>
       </form>
     </FormProvider>
