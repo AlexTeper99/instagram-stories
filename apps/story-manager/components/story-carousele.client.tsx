@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import {
   DragDropContext,
@@ -9,69 +8,12 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { X } from "lucide-react";
-import alexImage from "../../../packages/ui/assets/alex-selfie.jpg";
 
-import { StaticImageData } from "next/image";
+import { useCarouselStore } from "../store/media-store";
+import PreviewCard from "./preview-card";
 
-interface CarouselItem {
-  id: string;
-  src: string | StaticImageData;
-  alt: string;
-}
-
-export default function ImageCarousel() {
-  const [items, setItems] = useState<CarouselItem[]>([
-    {
-      id: "1",
-      src: alexImage,
-      alt: "Image 1",
-    },
-    {
-      id: "2",
-      src: alexImage,
-      alt: "Image 2",
-    },
-    {
-      id: "3",
-      src: alexImage,
-      alt: "Image 3",
-    },
-    {
-      id: "4",
-      src: alexImage,
-      alt: "Image 4",
-    },
-    {
-      id: "5",
-      src: alexImage,
-      alt: "Image 5",
-    },
-    {
-      id: "6",
-      src: alexImage,
-      alt: "Image 1",
-    },
-    {
-      id: "7",
-      src: alexImage,
-      alt: "Image 2",
-    },
-    {
-      id: "8",
-      src: alexImage,
-      alt: "Image 3",
-    },
-    {
-      id: "9",
-      src: alexImage,
-      alt: "Image 4",
-    },
-    {
-      id: "10",
-      src: alexImage,
-      alt: "Image 5",
-    },
-  ]);
+export default function StoryCarousel() {
+  const { items, setItems } = useCarouselStore();
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -101,7 +43,7 @@ export default function ImageCarousel() {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex overflow-x-auto space-x-4 p-4 bg-gray-100 rounded-lg"
+            className="flex overflow-x-scroll space-x-4 p-4 bg-gray-100 rounded-lg max-w-[80dvw]"
           >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -110,16 +52,11 @@ export default function ImageCarousel() {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="relative flex-shrink-0"
+                    className="relative flex-shrink-0 "
                     onClick={() => handleItemClick(item.id)}
                   >
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      width={200}
-                      height={200}
-                      className="rounded-lg shadow-md cursor-pointer"
-                    />
+                    <PreviewCard src={item.src as string} alt={item.alt} />
+
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -127,17 +64,13 @@ export default function ImageCarousel() {
                       }}
                       className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition-colors duration-200"
                     >
-                      <X size={16} />
+                      <X />
                     </button>
                   </div>
                 )}
               </Draggable>
             ))}
-
             {provided.placeholder}
-            <div className="rounded-lg shadow-md cursor-pointer w-full h-[60px]">
-              Add
-            </div>
           </div>
         )}
       </Droppable>
