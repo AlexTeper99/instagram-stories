@@ -48,7 +48,7 @@ export default function ImageUploader() {
   return (
     <div className="rounded-lg w-full">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-row items-end w-full  justify-between gap-2">
+        <div className="flex flex-row items-end w-full gap-2">
           <div>
             <Label className="text-foreground">Select an image to upload</Label>
             <Input
@@ -66,7 +66,7 @@ export default function ImageUploader() {
           </Button>
         </div>
 
-        {selectedImage && (
+        {/* {selectedImage && (
           <div className="mt-4">
             <p className="text-sm text-gray-500">Preview:</p>
             <Image
@@ -77,7 +77,7 @@ export default function ImageUploader() {
               height={60}
             />
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );
