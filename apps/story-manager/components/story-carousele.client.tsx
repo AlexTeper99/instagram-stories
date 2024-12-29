@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   DragDropContext,
   Droppable,
@@ -43,7 +42,7 @@ export default function StoryCarousel() {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex overflow-x-scroll space-x-4 p-4 bg-gray-100 rounded-lg max-w-[80dvw]"
+            className="flex overflow-x-auto space-x-4 p-4 border-2  rounded-lg  w-[80dvw] min-h-[230px]"
           >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -62,7 +61,7 @@ export default function StoryCarousel() {
                         e.stopPropagation();
                         handleDelete(item.id);
                       }}
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition-colors duration-200"
+                      className="absolute top-2 right-2 bg-destructive text-white p-1 rounded-full hover:bg-destructive transition-colors duration-200"
                     >
                       <X />
                     </button>
