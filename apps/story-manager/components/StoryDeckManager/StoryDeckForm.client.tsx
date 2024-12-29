@@ -13,6 +13,7 @@ import {
 } from "@workspace/ui/components/shadcn/form";
 import { useToast } from "@workspace/ui/hooks/use-toast";
 import { useStoryDeckStore } from "@/store/MediaStore.store";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   title: z.string().min(2, {
@@ -21,7 +22,9 @@ const FormSchema = z.object({
 });
 
 const StoryDeckForm = () => {
-  const { items } = useStoryDeckStore();
+  const { items, reset } = useStoryDeckStore();
+  const toast = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -32,6 +35,20 @@ const StoryDeckForm = () => {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data, "data");
+
+    // Llamar al server action para crear un nuevo deck
+
+    reset();
+
+    form.reset();
+
+    toast.toast({
+      title: "Deck created",
+      description: "The deck was created successfully!",
+      variant: "default",
+    });
+
+    router.push("/");
   }
 
   return (
