@@ -6,13 +6,14 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { X } from "lucide-react";
+import { CircleX, X } from "lucide-react";
 
-import { useCarouselStore } from "../store/media-store";
+import { useStoryDeckStore } from "../store/MediaStore.store";
 import PreviewCard from "./preview-card";
+import UploadMedia from "./UploadMedia";
 
-export default function StoryCarousel() {
-  const { items, setItems } = useCarouselStore();
+export default function StoryDeckManager() {
+  const { items, setItems } = useStoryDeckStore();
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -30,11 +31,6 @@ export default function StoryCarousel() {
     setItems(items.filter((item) => item.id !== id));
   };
 
-  const handleItemClick = (id: string) => {
-    console.log(`Clicked item with id: ${id}`);
-    // Add your click handler logic here
-  };
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="carousel" direction="horizontal">
@@ -42,7 +38,7 @@ export default function StoryCarousel() {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex overflow-x-auto space-x-4 p-4 border-2 rounded-lg  w-[70dvw] min-h-[320px] "
+            className="flex overflow-x-auto space-x-4 p-4 border-2 rounded-lg  max-w-[70dvw] min-h-[320px] "
           >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -52,24 +48,24 @@ export default function StoryCarousel() {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     className="relative flex-shrink-0 "
-                    onClick={() => handleItemClick(item.id)}
                   >
                     <PreviewCard src={item.src as string} alt={item.alt} />
 
-                    <button
+                    <CircleX
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDelete(item.id);
                       }}
-                      className="absolute top-2 right-2 bg-destructive text-white p-1 rounded-full hover:bg-destructive transition-colors duration-200"
-                    >
-                      <X />
-                    </button>
+                      className="absolute top-2 right-2 hover:bg-red-900 rounded-xl text-destructive cursor-pointer"
+                    />
                   </div>
                 )}
               </Draggable>
             ))}
             {provided.placeholder}
+            <div className=" w-[200px] h-[300px]">
+              <UploadMedia />
+            </div>
           </div>
         )}
       </Droppable>
