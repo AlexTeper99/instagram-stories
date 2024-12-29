@@ -7,10 +7,12 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({ title }) => {
   return (
-    <div className="flex flex-row justify-between items-center w-full max-w-7xl mx-auto p-4">
-      <h1 className="text-xl font-bold">{title}</h1>
-      <ModeToggle />
-    </div>
+    <header className="w-full shadow">
+      <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
+        <h1 className="text-xl font-bold">{title}</h1>
+        <ModeToggle />
+      </nav>
+    </header>
   );
 };
 
