@@ -1,13 +1,23 @@
 "use server";
 
-import { getAllStories } from "@/database/actions";
+import { getStoriesFromDeck } from "@/database/actions";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import Link from "next/link";
 
 export default async function Page() {
-  const allStories = await getAllStories();
+  // await createDeck({
+  //   title: "My first deck",
+  // });
 
-  console.log(allStories, "all stories");
+  // await createStory({
+  //   image_url: "https://images.unsplash.com/photo-1634170380000-4b3b3b3b3b3b",
+  //   createdAt: new Date().toDateString(),
+  //   deckId: 1,
+  // });
+
+  const res = await getStoriesFromDeck(1);
+
+  console.log(res, "get stories by deck id");
 
   return (
     <div className="flex items-center justify-center ">

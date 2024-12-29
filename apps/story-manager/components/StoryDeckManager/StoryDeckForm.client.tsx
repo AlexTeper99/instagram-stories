@@ -36,7 +36,9 @@ const StoryDeckForm = () => {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data, "data");
 
-    // Llamar al server action para crear un nuevo deck
+    // Llamar al server action para crear un nuevo deck.
+    // El server action debe recibir el titulo y las imagenes del deck.
+    // Las imagenes se tienen que subir al servidor (supabase) y guardar las stories y los decks en la base de datos.
 
     reset();
 
