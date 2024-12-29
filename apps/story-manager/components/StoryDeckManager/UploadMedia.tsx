@@ -21,8 +21,6 @@ export default function UploadMedia() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    console.log("aaa");
-    console.log(event, "event");
     if (event.target.files && event.target.files[0]) {
       const newImage: UploadedImage = {
         id: Date.now().toString(),
