@@ -1,20 +1,11 @@
 "use server";
 
+import { getAllStories } from "@/database/actions";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import Link from "next/link";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { stories } from "@/database/schema";
 
 export default async function Page() {
-  const connectionString = process.env.DATABASE_URL;
-  console.log(connectionString, "connection string");
-
-  // Disable prefetch as it is not supported for "Transaction" pool mode
-  const client = postgres(connectionString!, { prepare: false });
-  const db = drizzle(client);
-
-  const allStories = await db.select().from(stories);
+  const allStories = await getAllStories();
 
   console.log(allStories, "all stories");
 
