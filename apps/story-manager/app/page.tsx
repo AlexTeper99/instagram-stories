@@ -1,7 +1,8 @@
 "use server";
 
-import { getDecksWithStories } from "@/database/actions";
+import { createDeck, getDecksWithStories } from "@/database/actions";
 import { Button } from "@workspace/ui/components/shadcn/button";
+import { create } from "domain";
 import Link from "next/link";
 
 export default async function Page() {
@@ -14,6 +15,22 @@ export default async function Page() {
   //   createdAt: new Date().toDateString(),
   //   deckId: 1,
   // });
+
+  await createDeck(
+    {
+      title: "My NEWW deck",
+    },
+    [
+      {
+        image_url: "https://images.unsplash.com/photo-1634170380000-21321",
+        createdAt: new Date().toDateString(),
+      },
+      {
+        image_url: "https://images.unsplash.com/photo-1634170380000-fdasdas",
+        createdAt: new Date().toDateString(),
+      },
+    ]
+  );
 
   const res = await getDecksWithStories();
 

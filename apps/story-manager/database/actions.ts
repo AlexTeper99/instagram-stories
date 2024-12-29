@@ -10,8 +10,28 @@ import {
   storiesTable,
 } from "./schema";
 
-export async function createDeck(data: InsertDeck) {
-  await db.insert(decksTable).values(data);
+export async function createDeck(deckData: InsertDeck, stories: InsertStory[]) {
+  // Insert the deck and get the inserted ID
+  const [insertedDeck] = await db
+    .insert(decksTable)
+    .values(deckData)
+    .returning({ id: decksTable.id });
+
+  if (!insertedDeck) {
+    throw new Error("Failed to insert deck");
+  }
+  const deckId = insertedDeck.id;
+
+  // Add the deck ID to each story
+  const storiesWithDeckId = stories.map((story) => ({
+    ...story,
+    deckId,
+  }));
+
+  // Insert the stories with the deck ID
+  if (storiesWithDeckId.length) {
+    await db.insert(storiesTable).values(storiesWithDeckId);
+  }
 }
 
 export async function createStory(data: InsertStory) {
