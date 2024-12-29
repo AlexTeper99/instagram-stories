@@ -1,6 +1,6 @@
 "use server";
 
-import { getStoriesFromDeck } from "@/database/actions";
+import { getDecksWithStories } from "@/database/actions";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import Link from "next/link";
 
@@ -15,9 +15,9 @@ export default async function Page() {
   //   deckId: 1,
   // });
 
-  const res = await getStoriesFromDeck(1);
+  const res = await getDecksWithStories();
 
-  console.log(res, "get stories by deck id");
+  console.log(res, "get decks");
 
   return (
     <div className="flex items-center justify-center ">
@@ -27,6 +27,19 @@ export default async function Page() {
             Create your Story Deck
           </Link>
         </Button>
+        {res &&
+          Object.values(res).map((deck) => (
+            <div key={deck.deck.id}>
+              <h1>{deck.deck.title}</h1>
+              <div className="flex gap-4">
+                {deck.stories.map((story) => (
+                  <div key={story.id}>
+                    <div>{story.image_url}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

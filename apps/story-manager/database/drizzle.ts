@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 

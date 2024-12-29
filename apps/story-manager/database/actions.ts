@@ -6,6 +6,7 @@ import {
   InsertDeck,
   InsertStory,
   SelectDeck,
+  SelectStory,
   storiesTable,
 } from "./schema";
 
@@ -21,31 +22,37 @@ export async function getDeckById(id: SelectDeck["id"]) {
   return db.select().from(decksTable).where(eq(decksTable.id, id));
 }
 
-// export async function getUsersWithPostsCount(
-//   page = 1,
-//   pageSize = 5
-// ): Promise<
-//   Array<{
-//     postsCount: number;
-//     id: number;
-//     name: string;
-//     age: number;
-//     email: string;
-//   }>
-// > {
-//   return db
-//     .select({
-//       ...getTableColumns(usersTable),
-//       postsCount: count(postsTable.id),
-//     })
-//     .from(usersTable)
-//     .leftJoin(postsTable, eq(usersTable.id, postsTable.userId))
-//     .groupBy(usersTable.id)
-//     .orderBy(asc(usersTable.id))
-//     .limit(pageSize)
-//     .offset((page - 1) * pageSize);
-// }
+export async function getDecksWithStories() {
+  const rows = await db
+    .select({
+      decks: decksTable,
+      stories: storiesTable,
+    })
 
-export async function getStoriesFromDeck(id: SelectDeck["id"]) {
-  return db.select().from(storiesTable).where(eq(storiesTable.deckId, id));
+    .from(decksTable)
+    .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId))
+    .groupBy(decksTable.id, storiesTable.id);
+
+  const result = rows.reduce<
+    Record<number, { deck: SelectDeck; stories: SelectStory[] }>
+  >((acc, row) => {
+    const deck = row.decks;
+    const story = row.stories;
+
+    if (!acc[deck.id]) {
+      acc[deck.id] = { deck, stories: [] };
+    }
+
+    if (story) {
+      acc[deck.id]?.stories.push(story);
+    }
+
+    return acc;
+  }, {});
+
+  return result;
 }
+
+// export async function getStoriesFromDeck(id: SelectDeck["id"]) {
+//   return db.select().from(storiesTable).where(eq(storiesTable.deckId, id));
+// }
