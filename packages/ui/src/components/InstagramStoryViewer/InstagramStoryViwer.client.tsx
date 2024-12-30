@@ -189,7 +189,6 @@ export default function InstagramStoriesViewer({
           onMouseDown={() => setIsPaused(true)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
-          onClick={() => setIsPaused((prev) => !prev)}
         />
         <button
           className="absolute top-4 right-4 z-21 bg-opacity-50 rounded-full p-2 focus:outline-none transition-opacity duration-300 hover:bg-opacity-75 cursor-pointer"
