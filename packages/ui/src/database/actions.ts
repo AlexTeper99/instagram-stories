@@ -41,34 +41,52 @@ export async function createStory(data: InsertStory) {
 export async function getDeckById(id: SelectDeck["id"]) {
   return db.select().from(decksTable).where(eq(decksTable.id, id));
 }
-
-export async function getDecksWithStories() {
+export async function getDecksWithStories(): Promise<
+  Record<
+    string,
+    {
+      deck: SelectDeck;
+      stories: SelectStory[];
+      imageCover: string;
+    }
+  >
+> {
   const rows = await db
     .select({
       decks: decksTable,
       stories: storiesTable,
     })
-
     .from(decksTable)
     .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId))
     .groupBy(decksTable.id, storiesTable.id);
 
-  const result = rows.reduce<
-    Record<number, { deck: SelectDeck; stories: SelectStory[] }>
-  >((acc, row) => {
-    const deck = row.decks;
-    const story = row.stories;
+  const result = rows.reduce(
+    (acc, row) => {
+      const deck = row.decks;
+      const story = row.stories;
 
-    if (!acc[deck.id]) {
-      acc[deck.id] = { deck, stories: [] };
-    }
+      if (!acc[deck.id]) {
+        acc[deck.id] = { deck, stories: [], imageCover: null };
+      }
 
-    if (story) {
-      acc[deck.id]?.stories.push(story);
-    }
+      if (story) {
+        acc[deck.id].stories.push(story);
+        if (!acc[deck.id].imageCover && story.image_url) {
+          acc[deck.id].imageCover = story.image_url; // Assuming story has an 'image_url' field
+        }
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        deck: SelectDeck;
+        stories: SelectStory[];
+        imageCover: string;
+      }
+    >
+  );
 
   return result;
 }
