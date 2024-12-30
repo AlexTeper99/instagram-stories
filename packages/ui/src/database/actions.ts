@@ -48,44 +48,36 @@ export async function getDecksWithStories() {
       stories: storiesTable,
     })
     .from(decksTable)
-    .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId))
-    .groupBy(decksTable.id, storiesTable.id);
+    .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId));
 
-  const result = rows.reduce(
-    (acc, row) => {
-      const deck = row.decks;
-      const story = row.stories;
+  type DeckWithImages = {
+    deck: SelectDeck;
+    stories: SelectStory[];
+    imageCover: string;
+  };
 
-      if (!acc[deck.id]) {
-        acc[deck.id] = {
-          deck,
-          stories: [],
-          imageCover: null,
-        };
+  const deckWithImagesMap: Record<string, DeckWithImages> = {};
+
+  rows.forEach((row) => {
+    const deck = row.decks;
+    const story = row.stories;
+    const deckId = deck.id;
+
+    if (!deckWithImagesMap[deckId]) {
+      deckWithImagesMap[deckId] = {
+        deck,
+        stories: [],
+        imageCover: story.image_url,
+      };
+    }
+
+    if (story) {
+      deckWithImagesMap[deckId].stories.push(story);
+      if (!deckWithImagesMap[deckId].imageCover && story.image_url) {
+        deckWithImagesMap[deckId].imageCover = story.image_url;
       }
+    }
+  });
 
-      if (story) {
-        acc[deck.id].stories.push(story);
-        if (!acc[deck.id].imageCover && story.image_url) {
-          acc[deck.id].imageCover = story.image_url;
-        }
-      }
-
-      return acc;
-    },
-    {} as Record<
-      string,
-      {
-        deck: SelectDeck;
-        stories: SelectStory[];
-        imageCover: string;
-      }
-    >
-  );
-
-  return result;
+  return Object.values(deckWithImagesMap);
 }
-
-// export async function getStoriesFromDeck(id: SelectDeck["id"]) {
-//   return db.select().from(storiesTable).where(eq(storiesTable.deckId, id));
-// }

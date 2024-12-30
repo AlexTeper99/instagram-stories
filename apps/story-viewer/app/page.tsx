@@ -10,13 +10,13 @@ export default async function Page() {
     <div>
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {Object.values(res).map(({ imageCover, deck }, key) => (
+          {res.map(({ imageCover, deck }, key) => (
             <div key={key}>
               {imageCover && (
                 <DeckCard
                   src={imageCover}
-                  alt={deck.title!}
-                  title={deck.title!}
+                  alt={deck.title}
+                  title={deck.title}
                 />
               )}
             </div>
