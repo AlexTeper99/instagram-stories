@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { X } from "lucide-react";
 import { StoryType } from "@workspace/ui/database/schema";
 import { invariant } from "@workspace/ui/lib/utils";
 
@@ -179,19 +179,19 @@ export default function InstagramStoriesViewer({
           <X className="text-white w-6 h-6" />
         </button>
         <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 rounded-full p-2 focus:outline-none transition-opacity duration-300 hover:bg-opacity-75"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-[30%] h-full bg-opacity-50 p-2 hover:bg-neutral-900 hover:bg-opacity-[0.02]"
           onClick={previousStory}
-        >
-          <ChevronLeft className="text-white w-6 h-6" />
-        </button>
+          onTouchEnd={previousStory}
+        />
+
         <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 rounded-full p-2 focus:outline-none transition-opacity duration-300 hover:bg-opacity-75"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20  p-2 focus:outline-none h-full w-[30%]  hover:bg-neutral-900 hover:bg-opacity-[0.02]"
           onClick={nextStory}
-        >
-          <ChevronRight className="text-white w-6 h-6" />
-        </button>
+          onTouchEnd={nextStory}
+        />
+
         <button
-          className="absolute bottom-[30%] left-1/2 transform -translate-x-1/2 z-20  p-2 focus:outline-none transition-opacity w-[200px] h-[200px]"
+          className="absolute bottom-[30%] left-1/2 transform -translate-x-1/2 z-20  p-2 focus:outline-none transition-opacity w-[200px] h-[200px]  hover:bg-neutral-900 hover:bg-opacity-[0.02]"
           onMouseUp={() => setIsPaused(false)}
           onMouseDown={() => setIsPaused(true)}
           onTouchStart={() => setIsPaused(true)}

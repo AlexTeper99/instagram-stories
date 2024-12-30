@@ -16,7 +16,7 @@ export default async function Page() {
 
   return (
     <div className="p-4  overflow-y-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
         {res.map((elem, index) => (
           <DeckCard
             key={index}
@@ -24,6 +24,7 @@ export default async function Page() {
             alt={elem.decks.title}
             title={elem.decks.title}
             stories={elem.stories}
+            action={"view"}
           />
         ))}
       </div>
