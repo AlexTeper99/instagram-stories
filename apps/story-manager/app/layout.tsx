@@ -33,7 +33,7 @@ export default function RootLayout({
             disableTransitionOnChange
             enableColorScheme
           >
-            <Navbar title={"Story Viewer"} />
+            <Navbar title={"Story Manager"} />
 
             <main className="w-full max-w-7xl px-4 flex-grow flex flex-col items-center justify-center">
               {children}
