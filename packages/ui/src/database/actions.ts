@@ -71,7 +71,7 @@ export async function getDecksWithStories() {
       };
     }
 
-    if (story) {
+    if (story && deckWithImagesMap[deckId]) {
       deckWithImagesMap[deckId].stories.push(story);
       if (!deckWithImagesMap[deckId].imageCover && story?.image_url) {
         deckWithImagesMap[deckId].imageCover = story.image_url;
