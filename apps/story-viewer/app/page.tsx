@@ -5,7 +5,20 @@ import { getDecksWithStories } from "@workspace/ui/database/actions";
 import { groupByDeck } from "@workspace/ui/lib/utils";
 
 export default async function Page() {
-  const res = await getDecksWithStories().then((res) => groupByDeck(res));
+  const res = await getDecksWithStories()
+    .then((data) => groupByDeck(data))
+    .catch((error) => {
+      console.error("Error fetching decks with stories:", error);
+      return [];
+    });
+
+  if (!res || res.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <p>No decks available.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -17,7 +30,7 @@ export default async function Page() {
                 src={
                   stories[0]
                     ? stories[0].image_url
-                    : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
+                    : " https://via.placeholder.com/300"
                 }
                 alt={deck.title}
                 title={deck.title}
