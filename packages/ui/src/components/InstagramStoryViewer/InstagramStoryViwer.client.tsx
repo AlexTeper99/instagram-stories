@@ -124,7 +124,7 @@ export default function InstagramStoriesViewer({
         <AnimatePresence initial={false} custom={direction}>
           <motion.img
             key={currentIndex}
-            src={stories[currentIndex].image_url}
+            src={stories[currentIndex].image_url || null}
             alt={`Story ${currentIndex + 1}`}
             className="absolute w-full h-full object-contain"
             custom={direction}
