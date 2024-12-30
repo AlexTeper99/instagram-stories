@@ -24,10 +24,12 @@ export default function InstagramStoriesViewer({
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (!e.touches[0]) return;
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!e.changedTouches[0]) return;
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
 
