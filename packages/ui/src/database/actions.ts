@@ -41,16 +41,7 @@ export async function createStory(data: InsertStory) {
 export async function getDeckById(id: SelectDeck["id"]) {
   return db.select().from(decksTable).where(eq(decksTable.id, id));
 }
-export async function getDecksWithStories(): Promise<
-  Record<
-    string,
-    {
-      deck: SelectDeck;
-      stories: SelectStory[];
-      imageCover: string | null;
-    }
-  >
-> {
+export async function getDecksWithStories() {
   const rows = await db
     .select({
       decks: decksTable,
