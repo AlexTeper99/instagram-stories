@@ -4,7 +4,7 @@ import DeckCard from "@/components/DeckCard";
 import { getDecksWithStories } from "@workspace/ui/database/actions";
 
 export default async function Page() {
-  const res = await getDecksWithStories();
+  // const res = await getDecksWithStories();
 
   return (
     <div>
