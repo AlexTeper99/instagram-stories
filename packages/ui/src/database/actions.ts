@@ -63,7 +63,7 @@ export async function getDecksWithStories() {
     const story = row.stories;
     const deckId = deck.id;
 
-    if (!deckWithImagesMap[deckId] && story.image_url) {
+    if (!deckWithImagesMap[deckId] && story?.image_url) {
       deckWithImagesMap[deckId] = {
         deck,
         stories: [],
@@ -73,7 +73,7 @@ export async function getDecksWithStories() {
 
     if (story) {
       deckWithImagesMap[deckId].stories.push(story);
-      if (!deckWithImagesMap[deckId].imageCover && story.image_url) {
+      if (!deckWithImagesMap[deckId].imageCover && story?.image_url) {
         deckWithImagesMap[deckId].imageCover = story.image_url;
       }
     }
