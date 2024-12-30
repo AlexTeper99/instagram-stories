@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
 import { StoryType } from "@workspace/ui/database/schema";
+import { invariant } from "@workspace/ui/lib/utils";
 
 interface InstagramStoriesViewerProps {
   stories: StoryType[];
@@ -117,6 +118,8 @@ export default function InstagramStoriesViewer({
       };
     },
   };
+
+  if (!stories || stories.length === 0) invariant(false, "No stories provided");
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
