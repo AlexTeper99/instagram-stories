@@ -45,10 +45,16 @@ export async function getDecksWithStories() {
   const rows = await db
     .select({
       decks: decksTable,
-      stories: storiesTable,
     })
-    .from(decksTable)
-    .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId));
+    .from(decksTable);
 
-  return rows;
+  return Promise.all(
+    rows.map(async (row) => {
+      const stories = await db
+        .select()
+        .from(storiesTable)
+        .where(eq(storiesTable.deckId, row.decks.id));
+      return { ...row, stories };
+    })
+  ).then((res) => res);
 }

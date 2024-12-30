@@ -2,15 +2,9 @@
 
 import DeckCard from "@/components/DeckCard";
 import { getDecksWithStories } from "@workspace/ui/database/actions";
-import { groupByDeck } from "@workspace/ui/lib/utils";
 
 export default async function Page() {
-  const res = await getDecksWithStories()
-    .then((data) => groupByDeck(data))
-    .catch((error) => {
-      console.error("Error fetching decks with stories:", error);
-      return [];
-    });
+  const res = await getDecksWithStories();
 
   if (!res || res.length === 0) {
     return (
@@ -24,30 +18,19 @@ export default async function Page() {
     <div>
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {res.map(({ deck, stories }, key) => (
-            <div key={key}>
+          {res.map((elem) => (
+            <div key={elem.decks.id}>
               <DeckCard
                 src={
-                  stories[0]
-                    ? stories[0].image_url
+                  elem.stories[0]
+                    ? elem.stories[0].image_url
                     : " https://via.placeholder.com/300"
                 }
-                alt={deck.title}
-                title={deck.title}
+                alt={elem.decks.title}
+                title={elem.decks.title}
               />
             </div>
           ))}
-          {/* {res.map(({ imageCover, deck }, key) => (
-            <div key={key}>
-              {imageCover && (
-                <DeckCard
-                  src={imageCover}
-                  alt={deck.title}
-                  title={deck.title}
-                />
-              )}
-            </div>
-          ))} */}
         </div>
       </div>
     </div>
