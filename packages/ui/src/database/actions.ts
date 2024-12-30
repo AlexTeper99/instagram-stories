@@ -32,6 +32,8 @@ export async function createDeck(deckData: InsertDeck, stories: string[]) {
   if (storiesWithDeckId.length) {
     await db.insert(storiesTable).values(storiesWithDeckId);
   }
+
+  revalidatePath("/edit-story-deck");
 }
 
 export async function createStory(data: InsertStory) {
