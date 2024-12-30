@@ -14,11 +14,15 @@ import {
 import { useToast } from "@workspace/ui/hooks/use-toast";
 import { useStoryDeckStore } from "@/store/MediaStore.store";
 import { useRouter } from "next/navigation";
-import { createDeck } from "@/database/actions";
-import { InsertDeck, InsertStory } from "@/database/schema";
-import { convertBlobUrlToFile } from "@/lib/utils";
-import { uploadImage } from "@/database/supabase/storage/client";
 import { useTransition } from "react";
+import { convertBlobUrlToFile } from "@workspace/ui/lib/utils";
+
+import { uploadImage } from "@workspace/ui/database/supabase/storage/client";
+import {
+  InsertDeck,
+  InsertStory,
+} from "../../../../packages/ui/src/database/schema";
+import { createDeck } from "../../../../packages/ui/src/database/actions";
 
 const FormSchema = z.object({
   title: z.string().min(2, {
