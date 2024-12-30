@@ -6,7 +6,6 @@ import {
   InsertDeck,
   InsertStory,
   SelectDeck,
-  SelectStory,
   storiesTable,
 } from "./schema";
 

@@ -9,13 +9,13 @@ interface Props {
 
 const DeckCard: React.FC<Props> = ({ src, alt, title }) => {
   return (
-    <div className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105">
+    <div className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 w-full h-full">
       <Image
         src={src}
         alt={alt}
-        width={400}
-        height={400}
-        className="object-cover w-full h-full"
+        fill
+        className="object-cover min-h-24 min-w-24"
+        sizes="(min-width: 768px) 33vw, 50vw"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       <div className="absolute bottom-0 left-0 p-4">
