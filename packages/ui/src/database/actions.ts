@@ -47,7 +47,7 @@ export async function getDecksWithStories(): Promise<
     {
       deck: SelectDeck;
       stories: SelectStory[];
-      imageCover: string;
+      imageCover: string | null;
     }
   >
 > {
