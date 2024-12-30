@@ -33,3 +33,10 @@ export type InsertStory = typeof storiesTable.$inferInsert;
 
 export type SelectDeck = typeof decksTable.$inferSelect;
 export type SelectStory = typeof storiesTable.$inferSelect;
+
+export type StoryType = {
+  id: number;
+  createdAt: string;
+  deckId: number;
+  image_url: string;
+};

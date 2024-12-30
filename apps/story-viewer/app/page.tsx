@@ -2,7 +2,6 @@
 
 import DeckCard from "@workspace/ui/components/DeckCard";
 import { getDecksWithStories } from "@workspace/ui/database/actions";
-import Image from "next/image";
 
 export default async function Page() {
   const res = await getDecksWithStories();
@@ -24,6 +23,7 @@ export default async function Page() {
             src={elem.stories[0]?.image_url || ""}
             alt={elem.decks.title}
             title={elem.decks.title}
+            stories={elem.stories}
           />
         ))}
       </div>
