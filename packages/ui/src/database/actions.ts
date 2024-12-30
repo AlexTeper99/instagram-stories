@@ -66,13 +66,17 @@ export async function getDecksWithStories(): Promise<
       const story = row.stories;
 
       if (!acc[deck.id]) {
-        acc[deck.id] = { deck, stories: [], imageCover: null };
+        acc[deck.id] = {
+          deck,
+          stories: [],
+          imageCover: null,
+        };
       }
 
       if (story) {
         acc[deck.id].stories.push(story);
         if (!acc[deck.id].imageCover && story.image_url) {
-          acc[deck.id].imageCover = story.image_url; // Assuming story has an 'image_url' field
+          acc[deck.id].imageCover = story.image_url;
         }
       }
 

@@ -3,7 +3,7 @@ import { relations } from "drizzle-orm";
 
 export const decksTable = pgTable("decks", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  title: text("title"),
+  title: text("title").notNull(),
 });
 
 export const deckRelation = relations(decksTable, ({ many }) => ({
@@ -12,11 +12,17 @@ export const deckRelation = relations(decksTable, ({ many }) => ({
 
 export const storiesTable = pgTable("stories", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  createdAt: text("created_at"),
-  deckId: integer("deckId").references(() => decksTable.id, {
-    onDelete: "cascade",
-  }),
-  image_url: text("image_url"),
+  createdAt: text("created_at").notNull().default(new Date().toISOString()),
+  deckId: integer("deckId")
+    .references(() => decksTable.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  image_url: text("image_url")
+    .notNull()
+    .default(
+      "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
+    ),
 });
 
 export const postsRelations = relations(storiesTable, ({ one }) => ({
