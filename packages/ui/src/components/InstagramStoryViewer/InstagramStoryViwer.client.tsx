@@ -122,23 +122,25 @@ export default function InstagramStoriesViewer({
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
       <div className="relative w-full h-full max-w-3xl max-h-[80vh] overflow-hidden">
         <AnimatePresence initial={false} custom={direction}>
-          <motion.img
-            key={currentIndex}
-            src={stories[currentIndex].image_url || null}
-            alt={`Story ${currentIndex + 1}`}
-            className="absolute w-full h-full object-contain"
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-              scale: { duration: 0.4 },
-              rotateY: { duration: 0.4 },
-            }}
-          />
+          {stories[currentIndex].image_url && (
+            <motion.img
+              key={currentIndex}
+              src={stories[currentIndex].image_url}
+              alt={`Story ${currentIndex + 1}`}
+              className="absolute w-full h-full object-contain"
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+                scale: { duration: 0.4 },
+                rotateY: { duration: 0.4 },
+              }}
+            />
+          )}
         </AnimatePresence>
         <div
           className="absolute inset-0 flex flex-col justify-between"
