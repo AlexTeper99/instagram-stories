@@ -10,7 +10,7 @@ import {
   storiesTable,
 } from "./schema";
 
-export async function createDeck(deckData: InsertDeck, stories: InsertStory[]) {
+export async function createDeck(deckData: InsertDeck, stories: string[]) {
   // Insert the deck and get the inserted ID
   const [insertedDeck] = await db
     .insert(decksTable)
@@ -24,7 +24,7 @@ export async function createDeck(deckData: InsertDeck, stories: InsertStory[]) {
 
   // Add the deck ID to each story
   const storiesWithDeckId = stories.map((story) => ({
-    ...story,
+    image_url: story,
     deckId,
   }));
 

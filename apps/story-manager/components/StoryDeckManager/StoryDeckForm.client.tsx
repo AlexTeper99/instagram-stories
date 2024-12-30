@@ -18,10 +18,7 @@ import { useTransition } from "react";
 import { convertBlobUrlToFile } from "@workspace/ui/lib/utils";
 
 import { uploadImage } from "@workspace/ui/database/supabase/storage/client";
-import {
-  InsertDeck,
-  InsertStory,
-} from "../../../../packages/ui/src/database/schema";
+import { InsertDeck } from "../../../../packages/ui/src/database/schema";
 import { createDeck } from "../../../../packages/ui/src/database/actions";
 
 const FormSchema = z.object({
@@ -45,7 +42,7 @@ const StoryDeckForm = () => {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     startTransition(async () => {
-      const urls = [];
+      const urls: string[] = [];
       for (const item of items) {
         const imageFile = await convertBlobUrlToFile(item.src.toString());
 
@@ -62,17 +59,11 @@ const StoryDeckForm = () => {
         urls.push(imageUrl);
       }
 
-      const deckStories: InsertStory[] = urls.map((url, index) => ({
-        createdAt: new Date().toISOString(),
-        image_url: url,
-        alt: new Date().toISOString() + index.toString(),
-      }));
-
       const deckData: InsertDeck = {
         title: data.title,
       };
 
-      await createDeck(deckData, deckStories);
+      await createDeck(deckData, urls);
 
       reset();
 

@@ -1,9 +1,8 @@
-import { StaticImageData } from "next/image";
 import { create } from "zustand";
 
 interface StoryDeckItem {
   id: string;
-  src: string | StaticImageData;
+  src: string;
   alt: string;
 }
 
