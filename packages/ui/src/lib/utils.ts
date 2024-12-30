@@ -38,3 +38,52 @@ export async function convertBlobUrlToFile(blobUrl: string) {
   });
   return file;
 }
+type RestType = {
+  decks: {
+    id: number;
+    title: string;
+  };
+  stories: {
+    id: number;
+    createdAt: string;
+    deckId: number;
+    image_url: string;
+  } | null;
+}[];
+
+type DeckWithStories = {
+  deck: {
+    id: number;
+    title: string;
+  };
+  stories: {
+    id: number;
+    createdAt: string;
+    deckId: number;
+    image_url: string;
+  }[];
+};
+
+export function groupByDeck(restData: RestType): DeckWithStories[] {
+  const groupedData: { [deckId: number]: DeckWithStories } = {};
+
+  for (const entry of restData) {
+    const { decks, stories } = entry;
+
+    if (!groupedData[decks.id]) {
+      groupedData[decks.id] = {
+        deck: {
+          id: decks.id,
+          title: decks.title,
+        },
+        stories: [],
+      };
+    }
+
+    if (stories) {
+      groupedData[decks.id]?.stories.push(stories);
+    }
+  }
+
+  return Object.values(groupedData);
+}

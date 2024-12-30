@@ -50,34 +50,5 @@ export async function getDecksWithStories() {
     .from(decksTable)
     .leftJoin(storiesTable, eq(decksTable.id, storiesTable.deckId));
 
-  type DeckWithImages = {
-    deck: SelectDeck;
-    stories: SelectStory[];
-    imageCover: string;
-  };
-
-  const deckWithImagesMap: Record<string, DeckWithImages> = {};
-
-  rows.forEach((row) => {
-    const deck = row.decks;
-    const story = row.stories;
-    const deckId = deck.id;
-
-    if (!deckWithImagesMap[deckId] && story?.image_url) {
-      deckWithImagesMap[deckId] = {
-        deck,
-        stories: [],
-        imageCover: story.image_url,
-      };
-    }
-
-    if (story && deckWithImagesMap[deckId]) {
-      deckWithImagesMap[deckId].stories.push(story);
-      if (!deckWithImagesMap[deckId].imageCover && story?.image_url) {
-        deckWithImagesMap[deckId].imageCover = story.image_url;
-      }
-    }
-  });
-
-  return Object.values(deckWithImagesMap);
+  return rows;
 }
