@@ -9,8 +9,8 @@ import {
 import { CircleX } from "lucide-react";
 
 import { useStoryDeckStore } from "../../store/MediaStore.store";
-import PreviewCard from "./PreviewCard";
 import UploadMedia from "./UploadMedia";
+import MediaUploderCard from "./MediaUploaderCard";
 
 export default function StoryDeckImageManager() {
   const { items, setItems } = useStoryDeckStore();
@@ -49,7 +49,7 @@ export default function StoryDeckImageManager() {
                     {...provided.dragHandleProps}
                     className="relative flex-shrink-0 "
                   >
-                    <PreviewCard src={item.src as string} alt={item.alt} />
+                    <MediaUploderCard src={item.src as string} alt={item.alt} />
 
                     <CircleX
                       onClick={(e) => {
