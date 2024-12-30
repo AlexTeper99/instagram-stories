@@ -30,7 +30,7 @@ const DeckCard: React.FC<Props> = ({ src, alt, title, stories }) => {
           alt={alt}
           width={400}
           height={200}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover min-w-[200px] min-h-[300px]"
         />
         <div className="p-2">
           <h3 className="text-lg font-semibold text-center">{title}</h3>

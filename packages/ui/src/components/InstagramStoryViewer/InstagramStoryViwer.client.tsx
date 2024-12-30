@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { StoryType } from "@workspace/ui/database/schema";
 import { invariant } from "@workspace/ui/lib/utils";
 
@@ -41,10 +41,6 @@ export default function InstagramStoriesViewer({
         previousStory();
       }
     }
-  };
-
-  const togglePause = () => {
-    setIsPaused(!isPaused);
   };
 
   const nextStory = useCallback(() => {
@@ -150,7 +146,13 @@ export default function InstagramStoriesViewer({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="w-full flex p-2 z-10">
+          <div
+            className="w-full flex p-2 z-10 "
+            onMouseUp={() => setIsPaused(false)}
+            onMouseDown={() => setIsPaused(true)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+          >
             {stories?.map((_, index) => (
               <div key={index} className="flex-1 h-1 bg-gray-500 mx-1">
                 <motion.div
@@ -189,15 +191,12 @@ export default function InstagramStoriesViewer({
           <ChevronRight className="text-white w-6 h-6" />
         </button>
         <button
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-black bg-opacity-50 rounded-full p-2 focus:outline-none transition-opacity duration-300 hover:bg-opacity-75"
-          onClick={togglePause}
-        >
-          {isPaused ? (
-            <Play className="text-white w-6 h-6" />
-          ) : (
-            <Pause className="text-white w-6 h-6" />
-          )}
-        </button>
+          className="absolute bottom-[30%] left-1/2 transform -translate-x-1/2 z-20  p-2 focus:outline-none transition-opacity w-[200px] h-[200px]"
+          onMouseUp={() => setIsPaused(false)}
+          onMouseDown={() => setIsPaused(true)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        />
       </div>
     </div>
   );
