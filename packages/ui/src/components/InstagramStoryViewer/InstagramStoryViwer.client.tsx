@@ -125,10 +125,10 @@ export default function InstagramStoriesViewer({
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
       <div className="relative w-full h-full max-w-3xl max-h-[80vh] overflow-hidden">
         <AnimatePresence initial={false} custom={direction}>
-          {stories[currentIndex].image_url && (
+          {stories[currentIndex]?.image_url && (
             <motion.img
               key={currentIndex}
-              src={stories[currentIndex].image_url}
+              src={stories[currentIndex]?.image_url}
               alt={`Story ${currentIndex + 1}`}
               className="absolute w-full h-full object-contain"
               custom={direction}
@@ -151,7 +151,7 @@ export default function InstagramStoriesViewer({
           onTouchEnd={handleTouchEnd}
         >
           <div className="w-full flex p-2 z-10">
-            {stories.map((_, index) => (
+            {stories?.map((_, index) => (
               <div key={index} className="flex-1 h-1 bg-gray-500 mx-1">
                 <motion.div
                   className="h-full bg-white"
