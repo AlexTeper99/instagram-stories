@@ -176,13 +176,11 @@ export default function InstagramStoriesViewer({
         <button
           className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-[30%] h-full bg-opacity-50 p-2 hover:bg-neutral-900 hover:bg-opacity-[0.02]"
           onClick={previousStory}
-          onTouchEnd={previousStory}
         />
 
         <button
           className="absolute right-4 top-[60%] transform -translate-y-1/2 z-20 p-2 focus:outline-none h-[98%] w-[30%]  hover:bg-neutral-900 hover:bg-opacity-[0.02]"
           onClick={nextStory}
-          onTouchEnd={nextStory}
         />
 
         <button

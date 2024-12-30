@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { db, eq } from "./drizzle";
 import {
   decksTable,
@@ -40,6 +41,7 @@ export async function createStory(data: InsertStory) {
 export async function getDeckById(id: SelectDeck["id"]) {
   return db.select().from(decksTable).where(eq(decksTable.id, id));
 }
+
 export async function getDecksWithStories() {
   const rows = await db
     .select({
@@ -56,4 +58,10 @@ export async function getDecksWithStories() {
       return { ...row, stories };
     })
   ).then((res) => res);
+}
+
+export async function deleteDeck(id: SelectDeck["id"]) {
+  await db.delete(decksTable).where(eq(decksTable.id, id));
+
+  revalidatePath("/");
 }

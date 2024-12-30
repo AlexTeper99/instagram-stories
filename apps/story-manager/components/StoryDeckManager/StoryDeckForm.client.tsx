@@ -83,7 +83,7 @@ const StoryDeckForm = () => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-row items-center justify-between w-2/3 "
+        className="flex flex-row items-center justify-between  "
       >
         <FormField
           control={form.control}
@@ -103,6 +103,7 @@ const StoryDeckForm = () => {
         <Button
           type="submit"
           disabled={!form.getValues("title") || !items.length || isPending}
+          className="ml-3 mb-4"
         >
           {isPending ? "Uploading..." : "Upload"}
         </Button>

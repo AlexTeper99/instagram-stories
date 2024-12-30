@@ -24,7 +24,7 @@ export default async function Page() {
             alt={elem.decks.title}
             title={elem.decks.title}
             stories={elem.stories}
-            action={"view"}
+            action={"edit"}
             deckId={elem.decks.id}
           />
         ))}

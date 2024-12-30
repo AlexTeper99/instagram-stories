@@ -12,6 +12,12 @@ export default async function Page() {
             Create your Story Deck
           </Link>
         </Button>
+
+        <Button className="w-[217px]">
+          <Link href="/edit-story-deck" className="px-4 py-2">
+            Edit your Story Deck
+          </Link>
+        </Button>
       </div>
     </div>
   );
